@@ -13,7 +13,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 const BottomTab = createMaterialBottomTabNavigator();
 const TopTab = createMaterialTopTabNavigator();
 
-function SearchTab() {
+function SearchTab( navigation ) {
   return(
     <TopTab.Navigator>
       <TopTab.Screen name="City" component={SearchScreen} />
@@ -25,34 +25,32 @@ function SearchTab() {
 function AboutTab({ navigation }) {
   return (
     // <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+    <View>
       <About />
-      /* <Button
+       <Button
         title="Go to Search"
-        onPress={() => navigation.navigate('Search')}
-      />
-      <Button
-        title="Go to back to Search"
-        onPress={() => navigation.goBack()}
-      />
-    </View> */
+        onPress={() => navigation.navigate('Result')}
+      /> 
+    </View>
   );
 }
 
 function SearchScreen({ navigation }) {
   return (
-    // <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Search />
-      /* <Button
-        title="Go to Details"
-        onPress={() => navigation.navigate('About')}
-      />
-    </View> */
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <Search navigation={navigation} />
+    </View> 
   );
 }
 
+
+
 function ListScreen({ navigation }) {
   return(
-    <List />
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <List navigation={navigation} />
+    </View> 
+
   )
 }
 

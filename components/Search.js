@@ -3,7 +3,9 @@ import { View, Button, Alert, StyleSheet, Text } from 'react-native'
 import { TextInput, TouchableOpacity } from "react-native-gesture-handler";
 import { NavigationContainer } from '@react-navigation/native';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import List from "./List";
 
+const TopTab = createMaterialTopTabNavigator();
 export default class Search extends React.Component {
 
     constructor (props) {
@@ -19,30 +21,26 @@ export default class Search extends React.Component {
         //     city: city
         // })
     }
+
     
-    submit() {
-        this.props.navigation.navigate('Result', {city: this.state.city})
-    }
-
-    // Faut faire la fonction de list dans app et call, et créé labas la top tab (maybe)
-
-
+        
     render() {
         return(
-            <View style={{flexDirection: "column", height: 300, width: 300, padding: 20,}}>
-                
-                <TextInput 
-                    underlineColorAndroid={'transparent'} 
-                    style={styles.input}
-                    value={this.state.city}
-                    onChangeText={ (text) => this.setCity(text)}
-                />
-                <Button title="Recherche" onPress={() => this.submit()}/>
-                <Button title="Moche ou beau" onPress={() => Alert.alert(Math.random() < 0.5 ? "T BO" : "T CHEUM")}/>
+            <View>
+                <View style={{flexDirection: "column", height: 300, width: 300, padding: 20,}}>
+                    <TextInput 
+                        underlineColorAndroid={'transparent'} 
+                        style={styles.input}
+                        value={this.state.city}
+                        onChangeText={ (text) => this.setCity(text)}
+                    />
+                    <Text>{this.state.city}</Text>   
+                    <Button title="Recherche" onPress={() => console.log(this.props.navigation.navigate('Result', { city: "Paris"}))}/>
+                    <Button title="Moche ou beau" onPress={() => Alert.alert(Math.random() < 0.5 ? "T BO" : "T CHEUM")}/>
+                </View>
             </View>
         )
     }
-
 }
 
 const styles = StyleSheet.create({

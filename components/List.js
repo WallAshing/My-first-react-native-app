@@ -3,24 +3,20 @@ import { View, Text } from 'react-native'
 
 export default class List extends React.Component {
 
-    static navigationOption = {
-        title: 'Météo / '
-    }
-
     constructor(props) {
         super(props)
-        // console.log('state', this.props.navigation.stater)
         this.state = {
-            city: '',
+            city: this.props.navigation.state,
             report: null
         }
     }
 
 
     render() {
+        console.log(this.props.city)
         return(
             <View>
-                <Text>{this.state.city}</Text>
+                <Text></Text>
             </View>
         )
     }
