@@ -1,26 +1,18 @@
-import React from 'react'
-import { View, Text } from 'react-native'
+import React, {useState} from 'react'
+import { View, Text, Button } from 'react-native'
 
-export default class List extends React.Component {
+export default function List(navigation) {
+    
+    // const [city, setCity] = useState(props.route.params.params.city)
+    
+    return( 
+        <View 
+            style={{flexDirection: "column", height: 300, width: 300, padding: 20,}}
+        >
+            <Button title="test"
+            onPress={() => console.log(props)} />
+        </View>
+    )
 
-    constructor(props) {
-        super(props)
-        this.state = {
-            city: this.props.navigation.state,
-            report: null
-        }
-    }
-
-
-    render() {
-        console.log(this.props.city)
-        return(
-            <View>
-                <Text></Text>
-            </View>
-        )
-    }
-
-
-}
+} 
 
