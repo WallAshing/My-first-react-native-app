@@ -13,9 +13,9 @@ export default function SearchTab({ navigation }){
     function SearchScreen({ navigation }) {
     
         const [text, onChangeText] = useState("");
-    
+
         function submit(){
-            axios.get(`http://api.openweathermap.org/data/2.5/forecast?q=${text}&appid=4e69be4293f8a3e36d238e97bb3682eb&lang=fr&units=metric`)
+            axios.get(`http://api.openweathermap.org/data/2.5/forecast?q=${text}&appid=${process.env.API_KEY}&lang=fr&units=metric`)
                 .then((response) => {
                     navigation.navigate('Result', {
                         city : text,
@@ -27,7 +27,8 @@ export default function SearchTab({ navigation }){
         return(
             <View>
                 <TextInput 
-                    style={{  flex: 0,
+                    style={{ 
+                        flex: 0,
                         fontSize: 28,
                         fontWeight: "bold",
                         height: 50,

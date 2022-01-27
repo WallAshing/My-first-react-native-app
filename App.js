@@ -7,10 +7,10 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-
 // const Stack = createNativeStackNavigator();
 const BottomTab = createMaterialBottomTabNavigator();
 const TopTab = createMaterialTopTabNavigator();
+
 
 
 function AboutTab({ navigation }) {
@@ -25,6 +25,7 @@ function AboutTab({ navigation }) {
     </View>
   );
 }
+
 
 
 function NFCTab({ navigation }){
