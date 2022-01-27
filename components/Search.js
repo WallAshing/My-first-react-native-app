@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import { View, Button, Alert, StyleSheet, Text, TextInput, FlatList, ActivityIndicator } from 'react-native'
+import { View, Button, Alert, StyleSheet, Text, TextInput, FlatList, ActivityIndicator, Image } from 'react-native'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import axios from "axios"
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 // import { useNavigation } from '@react-navigation/native';
 
 
@@ -53,7 +54,7 @@ export default function SearchTab({ navigation }){
         const [text, onChangeText] = useState(route.params ? route.params.city : "");
         
         const [report, onChangeReport] = useState(route.params ? route.params.report : null);
-
+    
         function acroToCountry(){
             let result = countryList.find(([name, key]) => {
                 if (key.toLowerCase() == report.city.country.toLowerCase()){ 
@@ -63,29 +64,99 @@ export default function SearchTab({ navigation }){
             return result == null ? "English" : result[0];
         }
 
+        function displayDay(dateTime){
+            if (dateTime.split(" ")[1].slice(0, 5) == "00:00"){
+                return(<Text style={{color: "gray", fontSize: 20, paddingLeft: 5, paddingBottom: 10, paddingTop: 5}} >{ dateTime.split(" ")[0] }</Text>) 
+            } 
+            return
+        }
+        
+        function chooseIcon(main){
+            switch (main) {
+                case "Clouds":
+                    return "weather-cloudy"
+                case "Sun":
+                    return "weather-sunny"
+                case "Snow":
+                    return "snowflake"
+                case "Clear":
+                    return "weather-sunny"
+                case "Rain":
+                    return "weather-pouring"
+                case "Drizle":
+                    return "weather-rainy"
+                case "Mist":
+                    return "weather-fog"
+                case "Smoke":
+                    return "weather-fog"
+                case "Haze":
+                    return "weather-fog"
+                case "Dust":
+                    return "weather-fog"
+                case "Fog":
+                    return "weather-fog"
+                case "Sand":
+                    return "weather-fog"
+                case "Dust":
+                    return "weather-fog"
+                case "Ash":
+                    return "weather-fog"
+                case "Squall":
+                    return "weather-fog"
+                case "Tornado":
+                    return "weather-tornado"
+                case "Thunderstorm":
+                    return "weather-lightning"
+            
+                default:
+                    return;
+            }
+        }
+
         const renderItem = ({ item }) => (
-            <View style={{flex: 0, flexDirection:"row", padding: 10,}}>
-                
-                <View>
-                    <Text style={styles.tempBox.place} > {item.dt_txt} </Text>
-                    <Text style={styles.tempBox.time} > {item.dt_txt} </Text>
-                </View>
+            
+            <View>
 
-                <View>
-                    <Text style={styles.tempBox.clouds} > {acroToCountry()} - {report.city.name} - {(Math.floor(item.main.temp * 10)/10) + "°C"} </Text>
-                    <Text style={styles.tempBox.temp} > {acroToCountry()} - {report.city.name} - {(Math.floor(item.main.temp * 10)/10) + "°C"} </Text>
-                </View>
+                {displayDay(item.dt_txt)} 
 
+                <View style={{ flexDirection:"row", height: 120, backgroundColor: "#067BCB", borderWidth: 3, borderColor: "#005A97", margin: 5, borderRadius: 20 }}>
+                    
+                    <View style={{flex: 3, flexDirection:"column"}}>
+                        <View style={{flex: 2, justifyContent: "center", borderBottomColor: "#FFFFFF", borderBottomWidth: 2}}>
+                            <Text style={{ paddingLeft: 10, textAlign:"center", fontSize: 15, color: "#FFFFFF",}}> 
+                                {acroToCountry()} - {report.city.name} 
+                            </Text>
+                        </View>
+                        <View style={{flex: 3, justifyContent:"center", textAlign: "center"}}>
+                            <Text style={{justifyContent:"center", textAlign:"center", alignContent:"center", fontSize: 30, color: "#FFFFFF"}}> 
+                                {item.dt_txt.split(" ")[1].slice(0, 5)}  {(Math.floor(item.main.temp * 10)/10) + "°C"} 
+                            </Text>
+                        </View>
+                    </View>
+
+                    
+
+                    <View style={{flex: 2, flexDirection:"column", justifyContent: "center", borderLeftColor: "#FFFFFF", borderLeftWidth: 2}}>
+                        <View style={{flex: 2, justifyContent: "center",}}>
+                            <Text style={{textAlign: "center", fontSize: 13, color: "#FFFFFF",}}> 
+                            {item.weather[0].description[0].toUpperCase() + item.weather[0].description.slice(1, item.weather[0].description.length)} 
+                            </Text>
+                        </View>
+                        <View style={{flex: 3, justifyContent: "center", alignItems: "center"}}>
+                            <MaterialCommunityIcons name={chooseIcon(item.weather[0].main)} color={"white"} size={65} />
+                        </View>
+
+                </View>
+            </View>
+
+
+            
             </View>
           );
 
         if(route.params){
             return (
-                <View style={{ flex: 0, flexDirection: "column", padding: 20,}} >
-                    <Button 
-                        title={text}
-                        // onPress={ console.log(report.list[0].main.temp) }
-                    />
+                <View style={{ flex: 0, flexDirection: "column", paddingVertical: 20,}} >
                     <FlatList
                         data={report.list}
                         renderItem={renderItem}
@@ -116,21 +187,9 @@ export default function SearchTab({ navigation }){
 
 const styles = StyleSheet.create({
 
-    tempBox: {
-        fontFamily: 'Montserrat',
-
-        flex: 1,
-        paddingHorizontal: 10,
-        fontSize: 13,
-        
-    },
 
     place: {
         fontFamily: 'Montserrat',
-    },
-
-    time: {
-        
     },
 
     input: {
